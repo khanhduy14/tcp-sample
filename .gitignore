@@ -1,0 +1,15 @@
+/.idea
+/.bsp
+/target
+/project/target
+**/target
+/project/target/config-classes
+/project/project/target/config-classes
+project/.bloop
+.vscode/
+.metals
+.bloop
+tmp_data
+.fleet/
+.DS_Store
+.DS_Store/
