@@ -9,18 +9,26 @@ import java.net.InetSocketAddress
 
 object Main extends Logging {
   def main(args: Array[String]): Unit = {
-    val host = "localhost"
-    val port = 9900
-    println(s"Started client! connecting to ${host}:${port}")
+    if (args.length < 2) {
+      println("Insufficient arguments. You need to pass both host and port")
+    } else {
+      try {
+        val host = args.apply(0)
+        val port = args.apply(1).toInt
+        println(s"Started client! connecting to ${host}:${port}")
 
-    val clientProps = TcpClient.props(new InetSocketAddress(host, port), null)
+        val clientProps = TcpClient.props(new InetSocketAddress(host, port), null)
 
-    val actorSystem: ActorSystem = ActorSystem.create("MyActorSystem")
-    val clientActor: ActorRef = actorSystem.actorOf(clientProps)
-    println("Please input isbn value or press (q) to exit!")
-    while (true) {
-      val input = scala.io.StdIn.readLine()
-      clientActor ! ByteString(input)
+        val actorSystem: ActorSystem = ActorSystem.create("MyActorSystem")
+        val clientActor: ActorRef = actorSystem.actorOf(clientProps)
+        println("Please input isbn value!")
+        while (true) {
+          val input = scala.io.StdIn.readLine()
+          clientActor ! ByteString(input)
+        }
+      } catch {
+        case ex: Throwable => println(ex)
+      }
     }
   }
 }

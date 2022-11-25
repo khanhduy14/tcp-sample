@@ -40,7 +40,7 @@ class TcpClient(remote: InetSocketAddress, var listener: ActorRef) extends Actor
           listener ! "write failed"
         case Received(data) =>
           println(s"${data.utf8String}")
-          println("Please input isbn value or press (q) to exit!")
+          println("Please input isbn value!")
           listener ! data
         case "close" =>
           connection ! Close
